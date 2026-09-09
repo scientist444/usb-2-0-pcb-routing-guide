@@ -86,6 +86,12 @@ The practical takeaway I'd give anyone is: route the pair fully on one layer fro
 
 ![Asymmetric via + plane cut vs symmetric via pair with ground stitching](via-return-path.svg)
 
+## The manufactured board
+
+Here's the actual board after coming back from JLCPCB, same design as the layout above. You can see the Type-C connector at the bottom and the routed traces underneath the solder mask, which is a nice way to close the loop between what got designed and what actually got built.
+
+![Manufactured board from JLCPCB, showing the Type-C connector and populated components](final%20product.jpeg)
+
 ## Visualizing why skew causes common-mode noise
 
 I don't have access to a full field solver here, so rather than fake some numbers, I put together a simple idealized diagram that shows the actual mechanism at work. It models D+ and D- as two ideal square waves, one delayed slightly relative to the other (representing the length mismatch), and plots the resulting common-mode voltage, which is just the average of the two lines.
