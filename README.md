@@ -86,6 +86,21 @@ The practical takeaway I'd give anyone is: route the pair fully on one layer fro
 
 ![Asymmetric via + plane cut vs symmetric via pair with ground stitching](via-return-path.svg)
 
+## Visualizing why skew causes common-mode noise
+
+I don't have access to a full field solver here, so rather than fake some numbers, I put together a simple idealized diagram that shows the actual mechanism at work. It models D+ and D- as two ideal square waves, one delayed slightly relative to the other (representing the length mismatch), and plots the resulting common-mode voltage, which is just the average of the two lines.
+
+![Idealized diagram: skew between D+ and D- creates common-mode glitches](skew-common-mode.svg)
+
+With zero skew, D+ and D- would be perfect inverses of each other at every instant, and the common-mode voltage would sit flat at the midpoint the whole time. Once you add skew, there's a short window after every transition where both lines are briefly at the same level. During that window the common-mode voltage jumps almost all the way to a full rail instead of staying at the midpoint. That's the glitch that radiates as EMI and shows up as noise at the receiver. The wider the skew, the wider that glitch window is, which is basically the whole reason length matching matters in the first place.
+
+If you want to go further than this and actually simulate your own board (with real trace parasitics, dielectric loss, and coupling), here are tools people commonly use:
+- [LTspice](https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html), free, good for time-domain circuit-level simulation once you've extracted approximate trace models
+- [KiCad](https://www.kicad.org/) with its ngspice integration, useful if you're already laying the board out there
+- [openEMS](https://www.openems.de/) with AppCSXCAD, a free, open-source 3D electromagnetic field solver if you want to model the actual copper geometry
+- Commercial tools like Keysight ADS, Ansys HFSS, or Simbeor, which is what most professional signal integrity teams actually use for compliance-level work
+- For inspiration on building a custom simulation from scratch, [this crosstalk analysis project](https://github.com/simostein/pcb-crosstalk-analysis) walks through writing your own quasi-TEM coupled-microstrip model in Python
+
 ## Tools used
 
 - Design, schematic, and layout: [EasyEDA](https://easyeda.com)

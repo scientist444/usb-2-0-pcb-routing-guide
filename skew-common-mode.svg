@@ -1,0 +1,45 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .lbl { font-size: 13px; fill: #333; }
+    .title { font-size: 15px; font-weight: 600; fill: #111; }
+    .dp { stroke: #d35400; stroke-width: 3; fill: none; }
+    .dn { stroke: #2980b9; stroke-width: 3; fill: none; }
+    .cm { stroke: #c0392b; stroke-width: 3; fill: none; }
+    .axis { stroke: #999; stroke-width: 1; }
+    .spike { fill: #f5b7b1; opacity: 0.6; }
+    .nom { stroke: #7f8c8d; stroke-width: 1; stroke-dasharray: 3 3; }
+  </style>
+
+  <text x="40" y="20" class="title">D+ (skew = 0 reference)</text>
+  <line x1="40" y1="40" x2="790" y2="40" class="nom"/>
+  <line x1="40" y1="80" x2="790" y2="80" class="nom"/>
+  <path d="M40,80 H190 V40 H340 V80 H490 V40 H790" class="dp"/>
+  <text x="800" y="44" class="lbl">1</text>
+  <text x="800" y="84" class="lbl">0</text>
+
+  <text x="40" y="120" class="title">D- (delayed by skew, otherwise inverted)</text>
+  <line x1="40" y1="140" x2="790" y2="140" class="nom"/>
+  <line x1="40" y1="180" x2="790" y2="180" class="nom"/>
+  <path d="M40,140 H210 V180 H360 V140 H510 V180 H790" class="dn"/>
+  <text x="800" y="144" class="lbl">1</text>
+  <text x="800" y="184" class="lbl">0</text>
+
+  <!-- skew markers -->
+  <line x1="190" y1="35" x2="190" y2="185" stroke="#333" stroke-width="0.5" stroke-dasharray="2 2"/>
+  <line x1="210" y1="35" x2="210" y2="185" stroke="#333" stroke-width="0.5" stroke-dasharray="2 2"/>
+  <text x="192" y="200" class="lbl">skew</text>
+
+  <text x="40" y="245" class="title">Common-mode voltage, (D+ + D-) / 2</text>
+  <line x1="40" y1="300" x2="790" y2="300" class="nom"/>
+  <rect x="190" y="260" width="20" height="80" class="spike"/>
+  <rect x="340" y="300" width="20" height="80" class="spike"/>
+  <rect x="490" y="260" width="20" height="80" class="spike"/>
+  <path d="M40,300 H190 V260 H210 V300 H340 V340 H360 V300 H490 V260 H510 V300 H790" class="cm"/>
+  <text x="800" y="264" class="lbl">1</text>
+  <text x="800" y="304" class="lbl">0.5</text>
+  <text x="800" y="344" class="lbl">0</text>
+  <text x="215" y="255" class="lbl" fill="#c0392b">glitch (0-&gt;1 edge)</text>
+  <text x="365" y="395" class="lbl" fill="#c0392b">glitch (1-&gt;0 edge)</text>
+
+  <text x="40" y="415" class="lbl">Idealized model: two ideal square waves, one delayed by a fixed skew. Nominal common-mode stays flat at 0.5; every edge produces a brief glitch equal to the skew window. This is the mechanism, not a field-solver result.</text>
+</svg>
