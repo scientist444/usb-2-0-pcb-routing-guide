@@ -94,6 +94,18 @@ I don't have access to a full field solver here, so rather than fake some number
 
 With zero skew, D+ and D- would be perfect inverses of each other at every instant, and the common-mode voltage would sit flat at the midpoint the whole time. Once you add skew, there's a short window after every transition where both lines are briefly at the same level. During that window the common-mode voltage jumps almost all the way to a full rail instead of staying at the midpoint. That's the glitch that radiates as EMI and shows up as noise at the receiver. The wider the skew, the wider that glitch window is, which is basically the whole reason length matching matters in the first place.
 
+This is also a good place to bring in the eye diagram, which is the standard way signal integrity is actually judged on a real differential pair, including USB 2.0 compliance testing. Here's a generic textbook version of one, followed by a real measured example so you can see what an actual scope capture looks like:
+
+![Generic eye diagram, showing bit crossings forming the characteristic eye shape](eye-diagram-generic.svg)
+
+*Generic on-off keying eye diagram by [Gmoose1](https://commons.wikimedia.org/wiki/File:On-off_keying_eye_diagram.svg), licensed [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).*
+
+![Real measured eye diagram from an oscilloscope capture](eye-diagram-measured.png)
+
+*Measured eye pattern of a 1000BASE-SX Ethernet data stream, digitized with a Teledyne LeCroy oscilloscope, by [Andrew D. Zonenberg](https://commons.wikimedia.org/wiki/File:Eye_pattern_2.png), licensed [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). This isn't a USB 2.0 capture specifically, it's included to show what a real measured eye looks like versus the idealized textbook version above.*
+
+An eye diagram is built by overlaying thousands of unit intervals of a signal on top of each other. What you get is literally the shape of an eye: the more open that eye is (tall and wide), the cleaner the signal. Skew, impedance mismatch, and via-induced reflections all show up here as the eye closing in, either vertically (amplitude noise, which is what a skew-induced common-mode glitch adds) or horizontally (timing jitter). This is exactly why compliance test houses run eye diagram tests on USB 2.0 High-Speed signals: it's a single picture that captures the cumulative effect of everything discussed in this article, stack-up, impedance, length matching, and via placement, all at once.
+
 If you want to go further than this and actually simulate your own board (with real trace parasitics, dielectric loss, and coupling), here are tools people commonly use:
 - [LTspice](https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html), free, good for time-domain circuit-level simulation once you've extracted approximate trace models
 - [KiCad](https://www.kicad.org/) with its ngspice integration, useful if you're already laying the board out there
