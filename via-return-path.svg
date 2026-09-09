@@ -1,0 +1,68 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <style>
+    .lbl { font-size: 14px; fill: #222; }
+    .title { font-size: 16px; font-weight: 600; fill: #111; }
+    .bad { fill: #c0392b; }
+    .good { fill: #1e8449; }
+    .plane { fill: #cfd8dc; stroke: #90a4ae; stroke-width: 1; }
+    .gap { fill: #ffffff; stroke: #c0392b; stroke-width: 1.5; stroke-dasharray: 4 3; }
+    .trace-dp { stroke: #d35400; stroke-width: 4; fill: none; }
+    .trace-dn { stroke: #2980b9; stroke-width: 4; fill: none; }
+    .via { fill: #f1c40f; stroke: #7d6608; stroke-width: 1.5; }
+    .gvia { fill: #7f8c8d; stroke: #34495e; stroke-width: 1.5; }
+    .arrow { stroke: #c0392b; stroke-width: 2; fill: none; marker-end: url(#arrowbad); }
+    .arrowgood { stroke: #1e8449; stroke-width: 2; fill: none; marker-end: url(#arrowgood); }
+  </style>
+  <defs>
+    <marker id="arrowbad" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#c0392b"/>
+    </marker>
+    <marker id="arrowgood" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#1e8449"/>
+    </marker>
+  </defs>
+
+  <!-- LEFT: BAD example -->
+  <text x="30" y="28" class="title bad">Asymmetric via + plane cut (bad)</text>
+  <rect x="20" y="180" width="380" height="40" class="plane"/>
+  <rect x="150" y="180" width="60" height="40" class="gap"/>
+  <text x="130" y="240" class="lbl">GND plane (slot under pair)</text>
+
+  <path d="M40,120 H150" class="trace-dp"/>
+  <circle cx="150" cy="120" r="7" class="via"/>
+  <path d="M150,120 V160" stroke="#d35400" stroke-width="4"/>
+  <path d="M150,160 H380" class="trace-dp"/>
+
+  <path d="M40,140 H380" class="trace-dn"/>
+
+  <path d="M150,105 Q180,90 210,105" class="arrow"/>
+  <text x="155" y="85" class="lbl bad">only D+ vias through, plane slotted</text>
+
+  <text x="30" y="270" class="lbl">D+ takes a via + layer change; D- stays straight.</text>
+  <text x="30" y="290" class="lbl">Return current under the slot has no direct path back,</text>
+  <text x="30" y="310" class="lbl">so the pair picks up skew, impedance mismatch, and EMI.</text>
+
+  <!-- RIGHT: GOOD example -->
+  <text x="480" y="28" class="title good">Symmetric via pair + ground stitching (good)</text>
+  <rect x="470" y="180" width="410" height="40" class="plane"/>
+  <circle cx="620" cy="200" r="6" class="gvia"/>
+  <circle cx="740" cy="200" r="6" class="gvia"/>
+  <text x="560" y="240" class="lbl">GND plane stays continuous, stitching vias nearby</text>
+
+  <path d="M490,120 H660" class="trace-dp"/>
+  <circle cx="660" cy="120" r="7" class="via"/>
+  <path d="M660,120 V160" stroke="#d35400" stroke-width="4"/>
+  <path d="M660,160 H860" class="trace-dp"/>
+
+  <path d="M490,140 H700" class="trace-dn"/>
+  <circle cx="700" cy="140" r="7" class="via"/>
+  <path d="M700,140 V160" stroke="#2980b9" stroke-width="4"/>
+  <path d="M700,160 H860" class="trace-dn" transform="translate(0,0)"/>
+
+  <path d="M660,105 Q680,90 700,105" class="arrowgood"/>
+  <text x="610" y="85" class="lbl good">both traces via together, same layer swap</text>
+
+  <text x="480" y="270" class="lbl">Both D+ and D- transition layers together, close</text>
+  <text x="480" y="290" class="lbl">together, with ground vias stitched nearby so the</text>
+  <text x="480" y="310" class="lbl">return path stays short and symmetric on both sides.</text>
+</svg>
