@@ -38,7 +38,7 @@ I routed the USB differential pair on the top layer, directly referenced to the 
 
 With the stack-up fixed, the next question is what trace width and spacing actually gets you to spec. The USB 2.0 spec calls for a 90Ω differential impedance with ±15% tolerance. In practice though, most fabs and designers aim for a tighter ±10% window, just to leave some margin since manufacturing variance alone eats into that budget. Getting to 90Ω isn't something you guess at, it comes straight out of your stack-up (dielectric height and constant), and you solve for trace width and spacing using the edge-coupled microstrip equations.
 
-I used the built-in impedance calculator on [JLCPCB's PCB design platform](https://design.jlcpcb.com?from=umer), plugging in the stack-up parameters straight from the fab's own material spec. The height (h) and dielectric constant (εr) need to match what the manufacturer actually builds, otherwise the whole calculation doesn't mean much.
+I used JLCPCB's impedance calculator, plugging in the stack-up parameters straight from the fab's own material spec. The height (h) and dielectric constant (εr) need to match what the manufacturer actually builds, otherwise the whole calculation doesn't mean much.
 
 ![Differential impedance calculator - edge coupled microstrip, 90Ω target](trace%20width.png)
 
@@ -68,7 +68,7 @@ A couple things worth pointing out here:
 
 ![Actual routed differential pair on the layout](actual%20layout.png)
 
-This is the routed pair coming off the Type-C connector at the bottom of the board, heading up toward the GND-referenced via area near the top. Two rules drove basically every decision in this routing.
+This is the routed pair coming off the Type-C connector at the bottom of the board, heading up toward the GND-referenced via area near the top. If you'd rather hand this part off, JLCPCB also runs a [PCB layout](https://design.jlcpcb.com/?from=umer) service, you send over your schematic and requirements and their team routes the board for you. I routed this one myself though, and two rules drove basically every decision along the way.
 
 ### Rule 1: Length matching
 
@@ -141,7 +141,7 @@ All of the above is only worth as much as what actually comes back from the fab.
 ## Tools used
 
 - Design, schematic, and layout: [EasyEDA](https://easyeda.com)
-- Manufacturing and fabrication: [JLCPCB](https://design.jlcpcb.com?from=umer)
+- Manufacturing and fabrication: [JLCPCB](https://jlcpcb.com/)
 - Impedance calculation: JLCPCB's built-in stack-up and impedance calculator, cross-checked against [DigiKey's PCB Trace Impedance Calculator](https://www.digikey.com/en/resources/conversion-calculators/conversion-calculator-pcb-trace-impedance)
 
 ## Summary
